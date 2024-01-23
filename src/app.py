@@ -1,7 +1,7 @@
 import streamlit as st
 
 # Page title
-st.set_page_config(page_title="Digit Delineator!", layout="centered")
+st.set_page_config(page_title="Face Sight!", layout="centered")
 st.markdown(
     """
     <style>
@@ -10,7 +10,7 @@ st.markdown(
         a[href*="/home"]{
             display: none;
         }
-        a[href*="/cast_spell"]{
+        a[href*="/face_detection"]{
             display: none;
         }
     </style>
