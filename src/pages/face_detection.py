@@ -1,7 +1,8 @@
 import streamlit as st
 import streamlit.components.v1 as components
 import base64
-from PIL import Image
+from PIL import Image, ImageOps
+import numpy as np
 
 
 def show():
@@ -83,8 +84,46 @@ def show():
                         </div>
                         """
                     components.html(img_container, height=320)
-            with col2:
-                st.title("Detected Face")
+        with col2:
+            st.title("Detected Face")
+            with st.container(border=True):
+                st.markdown(
+                    f"""
+                            <style>
+                            [data-testid="stMarkdown"] {{
+                            background-color: #f0f0f0;
+                            }}
+                            </style>
+                            """,
+                    unsafe_allow_html=True,
+                )
+                uploaded_files = st.file_uploader(
+                    "Choose images for the new container...",
+                    type=["jpg", "jpeg", "png"],
+                    accept_multiple_files=True,
+                )
+                if uploaded_files is not None and len(uploaded_files) > 0:
+                    # Calculate the number of images per row
+                    images_per_row = int(np.ceil(np.sqrt(len(uploaded_files))))
+                    # Create a list to hold the images
+                    images = []
+                    for uploaded_file in uploaded_files:
+                        if uploaded_file is not None:
+                            # Convert the file to an image
+                            image = Image.open(uploaded_file)
+                        else:
+                            image = Image.open("static/images/img_uplod.jpg")
+                        # Resize the image to a fixed size
+                        image = ImageOps.fit(image, (100, 100))
+                        images.append(image)
+                    # Display the images in rows
+                    for i in range(0, len(images), images_per_row):
+                        cols = st.columns(images_per_row)
+                        for j in range(images_per_row):
+                            idx = i + j
+                            if idx < len(images):
+                                cols[j].image(images[idx], use_column_width=True)
+
                 # components.html(img_container, height=320)
         if detection_type == "Real-Time Detection":
             st.sidebar.write("Real-Time Detection is selected")
