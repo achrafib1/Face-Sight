@@ -3,44 +3,17 @@ import streamlit.components.v1 as components
 import base64
 from PIL import Image, ImageOps
 import numpy as np
-from streamlit_webrtc import webrtc_streamer, VideoTransformerBase
-import av
-
-
-def process_frame(frame):
-    # Make prediction here
-    # result = predict(model, frame)
-
-    # Display the result on the frame
-    # frame = display_result(frame, result)
-
-    return frame
-
-
-class VideoTransformer(VideoTransformerBase):
-    def transform(self, frame):
-        img = frame.to_ndarray(format="bgr24")
-
-        # Process the image
-        img = process_frame(img)
-
-        return img
+from utils.video_helper import VideoTransformer, process_frame
+from streamlit_webrtc import webrtc_streamer
 
 
 def show():
     st.set_page_config(page_title="Detection Page", layout="wide")
     st.markdown("<style> ul {display: none;} </style>", unsafe_allow_html=True)
     st.sidebar.title("Navigation")
-    page = st.sidebar.radio("Go to", ["", "Home", "Detection Page", "About", "Help"])
-    st.markdown(
-        """
-    <style>
-        div[role="radiogroup"] > label:first-child {
-            display: none;
-        }
-    </style>
-    """,
-        unsafe_allow_html=True,
+    page = st.sidebar.radio("Go to", ["Detection Page", "Home"])
+    st.sidebar.markdown(
+        '<hr style="border: 0.9px solid orange">', unsafe_allow_html=True
     )
     if page == "Home":
         st.title("Home Page")
@@ -50,13 +23,14 @@ def show():
         st.sidebar.subheader("Detection Configuration")
         detection_type = st.sidebar.radio(
             "Choose detection type",
-            ["Select Option", "Upload Image", "Real-Time Detection"],
+            ["Upload Image", "Real-Time Detection"],
+            index=None,
         )
         with st.container(border=True):
             col1, col2 = st.columns(2, gap="large")
             with col1:
                 st.title("Original Image")
-                if detection_type == "Select Option":
+                if detection_type == None:
                     choice_container = f"""
                             <div style="
                                 width: 390px;
@@ -87,7 +61,7 @@ def show():
                         # Create the HTML for the image container
                     img_container = f"""
                         <div style="
-                            width: 390px;
+                            width: 100%px;
                             height: 300px;
                             border: 1px solid black;
                             border-radius: 15px;
@@ -106,6 +80,8 @@ def show():
                         </div>
                         """
                     components.html(img_container, height=320)
+                    if st.button("Predict", use_container_width=True):
+                        st.write("predict button is pressed")
                 if detection_type == "Real-Time Detection":
                     st.sidebar.write("Real-Time Detection is selected")
                     st.header("Real Time Detection")
@@ -152,12 +128,6 @@ def show():
                                 idx = i + j
                                 if idx < len(images):
                                     cols[j].image(images[idx], use_column_width=True)
-
-    if page == "About":
-        st.title("About Page")
-
-    if page == "Help":
-        st.title("Help Page")
 
 
 show()
