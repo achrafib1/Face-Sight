@@ -20,6 +20,9 @@ env/
 # Ignore trained TensorFlow models
 src/models/*.h5
 
+# Ignore trained yolov7 models
+src/models/*.pt
+
 # Distribution / packaging
 build/
 dist/
