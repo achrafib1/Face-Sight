@@ -23,6 +23,10 @@ src/models/*.h5
 # Ignore trained yolov7 models
 src/models/*.pt
 
+#ignore the downloaded YOLOv7 repository
+yolov7/
+
+
 # Distribution / packaging
 build/
 dist/

@@ -1,11 +1,8 @@
 import cv2
 import torch
-import cv2
-import torch
-from utils.general import non_max_suppression
 
 
-def process_image(image, model):
+def process_image(image, model, non_max_suppression):
     # Save the original image size
     original_size = image.shape[:2]
 
@@ -36,4 +33,4 @@ def process_image(image, model):
     # Apply non-maximum suppression to the predictions
     pred = non_max_suppression(pred)
 
-    return pred, image, original_size
+    return pred, image, img, original_size
