@@ -1,14 +1,11 @@
-from model_loader import load_model
-from image_processor import process_image
-from box_drawer import draw_boxes
+from .model_loader import load_model
+from .image_processor import process_image
+from .box_drawer import draw_boxes
 
 
-def predict(image, model_path, faces):
-    # Load the model
-    model, names, scale_coords, non_max_suppression, plot_one_box = load_model(
-        model_path
-    )
-
+def predict(
+    image, model, names, faces, scale_coords, non_max_suppression, plot_one_box
+):
     if image is None:
         print("Error: Could not read image")
         return None, None

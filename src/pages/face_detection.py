@@ -5,12 +5,15 @@ from PIL import Image, ImageOps
 import numpy as np
 from utils.video_helper import VideoTransformer, process_frame
 from streamlit_webrtc import webrtc_streamer
+from utils.model_loader import load_model
+from utils.predict import predict
 
 
 def show():
     st.set_page_config(page_title="Detection Page", layout="wide")
     st.markdown("<style> ul {display: none;} </style>", unsafe_allow_html=True)
     st.sidebar.title("Navigation")
+    images = []
     page = st.sidebar.radio("Go to", ["Detection Page", "Home"])
     st.sidebar.markdown(
         '<hr style="border: 0.9px solid orange">', unsafe_allow_html=True
@@ -47,18 +50,29 @@ def show():
                             </div>
                             """
                     components.html(choice_container, height=320)
+                (
+                    model,
+                    names,
+                    scale_coords,
+                    non_max_suppression,
+                    plot_one_box,
+                ) = load_model("src/models/model.pt")
                 if detection_type == "Upload Image":
                     uploaded_file = st.sidebar.file_uploader(
                         "Choose an image...", type=["jpg", "jpeg", "png"]
                     )
+                    img_array = None
                     if uploaded_file is not None:
                         # Convert the file to an image
                         img_str = base64.b64encode(uploaded_file.read()).decode()
+                        img = Image.open(uploaded_file)
+                        # Convert the image to a numpy array
+                        img_array = np.array(img)
                     else:
                         img_str = base64.b64encode(
                             open("static/images/img_uplod.jpg", "rb").read()
                         ).decode()
-                        # Create the HTML for the image container
+                    # Create the HTML for the image container
                     img_container = f"""
                         <div style="
                             width: 100%px;
@@ -82,11 +96,29 @@ def show():
                     components.html(img_container, height=320)
                     if st.button("Predict", use_container_width=True):
                         st.write("predict button is pressed")
+                        _, image_with_boxes = predict(
+                            img_array,
+                            model,
+                            names,
+                            images,
+                            non_max_suppression,
+                            scale_coords,
+                            plot_one_box,
+                        )
+                        images.append(image_with_boxes)
                 if detection_type == "Real-Time Detection":
                     st.sidebar.write("Real-Time Detection is selected")
                     st.header("Real Time Detection")
+                    videotransformer = VideoTransformer(
+                        model,
+                        names,
+                        images,
+                        scale_coords,
+                        non_max_suppression,
+                        plot_one_box,
+                    )
                     webrtc_streamer(
-                        key="example", video_transformer_factory=VideoTransformer
+                        key="example", video_transformer_factory=videotransformer
                     )
 
             with col2:
@@ -111,7 +143,7 @@ def show():
                         # Calculate the number of images per row
                         images_per_row = int(np.ceil(np.sqrt(len(uploaded_files))))
                         # Create a list to hold the images
-                        images = []
+                        # images = []
                         for uploaded_file in uploaded_files:
                             if uploaded_file is not None:
                                 # Convert the file to an image

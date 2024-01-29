@@ -1,26 +1,16 @@
 from streamlit_webrtc import VideoTransformerBase
 import av
-from image_processor import process_image
-from box_drawer import draw_boxes
+from .image_processor import process_image
+from .box_drawer import draw_boxes
+from .predict import predict
 
 
 def process_frame(
     frame, model, names, faces, non_max_suppression, scale_coords, plot_one_box
 ):
-    # Process the image and Make prediction
-    pred, image, processed_image, original_size = process_image(
-        frame, model, non_max_suppression
-    )
-    # Draw boxes on the image
-    faces, image_with_boxes = draw_boxes(
-        pred,
-        image,
-        processed_image,
-        names,
-        original_size,
-        faces,
-        scale_coords,
-        plot_one_box,
+    # Make prediction
+    _, image_with_boxes = predict(
+        frame, model, names, faces, non_max_suppression, scale_coords, plot_one_box
     )
 
     return image_with_boxes
