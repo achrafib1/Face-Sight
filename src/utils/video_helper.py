@@ -10,7 +10,7 @@ def process_frame(
 ):
     # Make prediction
     _, image_with_boxes = predict(
-        frame, model, names, faces, non_max_suppression, scale_coords, plot_one_box
+        frame, model, names, faces, scale_coords, non_max_suppression, plot_one_box
     )
 
     return image_with_boxes
@@ -18,7 +18,7 @@ def process_frame(
 
 class VideoTransformer(VideoTransformerBase):
     def __init__(
-        self, model, names, faces, non_max_suppression, scale_coords, plot_one_box
+        self, model, names, faces, scale_coords, non_max_suppression, plot_one_box
     ):
         self.model = model
         self.names = names

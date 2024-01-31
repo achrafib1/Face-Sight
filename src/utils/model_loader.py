@@ -1,7 +1,8 @@
 import cv2
-from yolov7.models.experimental import attempt_load
-from yolov7.utils.general import scale_coords, non_max_suppression
-from yolov7.utils.plots import plot_one_box
+
+from ..yolov7.models.experimental import attempt_load
+from ..yolov7.utils.general import scale_coords, non_max_suppression
+from ..yolov7.utils.plots import plot_one_box
 
 
 def load_model(model_path):

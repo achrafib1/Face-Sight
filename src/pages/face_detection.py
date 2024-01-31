@@ -3,10 +3,10 @@ import streamlit.components.v1 as components
 import base64
 from PIL import Image, ImageOps
 import numpy as np
-from utils.video_helper import VideoTransformer, process_frame
+from src.utils.video_helper import VideoTransformer, process_frame
 from streamlit_webrtc import webrtc_streamer
-from utils.model_loader import load_model
-from utils.predict import predict
+from src.utils.model_loader import load_model
+from src.utils.predict import predict
 
 
 def show():
@@ -101,11 +101,12 @@ def show():
                             model,
                             names,
                             images,
-                            non_max_suppression,
                             scale_coords,
+                            non_max_suppression,
                             plot_one_box,
                         )
                         images.append(image_with_boxes)
+                        st.write(len(images))
                 if detection_type == "Real-Time Detection":
                     st.sidebar.write("Real-Time Detection is selected")
                     st.header("Real Time Detection")
@@ -139,20 +140,13 @@ def show():
                         type=["jpg", "jpeg", "png"],
                         accept_multiple_files=True,
                     )
-                    if uploaded_files is not None and len(uploaded_files) > 0:
-                        # Calculate the number of images per row
-                        images_per_row = int(np.ceil(np.sqrt(len(uploaded_files))))
-                        # Create a list to hold the images
-                        # images = []
-                        for uploaded_file in uploaded_files:
-                            if uploaded_file is not None:
-                                # Convert the file to an image
-                                image = Image.open(uploaded_file)
-                            else:
-                                image = Image.open("static/images/img_uplod.jpg")
+                    # Calculate the number of images per row
+                    images_per_row = int(np.ceil(np.sqrt(len(images))))
+                    if images_per_row > 0:
+                        for i in range(len(images)):
+                            image = Image.fromarray(images[i])
                             # Resize the image to a fixed size
-                            image = ImageOps.fit(image, (100, 100))
-                            images.append(image)
+                            images[i] = ImageOps.fit(image, (100, 100))
                         # Display the images in rows
                         for i in range(0, len(images), images_per_row):
                             cols = st.columns(images_per_row)
