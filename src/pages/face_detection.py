@@ -111,7 +111,8 @@ def show():
                             non_max_suppression,
                             plot_one_box,
                         )
-                        images.append(image_with_boxes)
+                        # if len(images) > 0:
+                        #     images.append(image_with_boxes)
                         st.write(len(images))
                 if detection_type == "Real-Time Detection":
                     st.sidebar.write("Real-Time Detection is selected")
@@ -130,6 +131,7 @@ def show():
 
             with col2:
                 st.title("Detected Face")
+                st.subheader("Number of detected faces : " + str(len(images)))
                 with st.container(border=True):
                     st.markdown(
                         f"""
@@ -141,11 +143,11 @@ def show():
                                 """,
                         unsafe_allow_html=True,
                     )
-                    uploaded_files = st.file_uploader(
-                        "Choose images for the new container...",
-                        type=["jpg", "jpeg", "png"],
-                        accept_multiple_files=True,
-                    )
+                    # uploaded_files = st.file_uploader(
+                    #     "Choose images for the new container...",
+                    #     type=["jpg", "jpeg", "png"],
+                    #     accept_multiple_files=True,
+                    #   )
                     # Calculate the number of images per row
                     images_per_row = int(np.ceil(np.sqrt(len(images))))
                     if images_per_row > 0:
