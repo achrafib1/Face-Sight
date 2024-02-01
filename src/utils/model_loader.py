@@ -1,8 +1,13 @@
 import cv2
+import os
+import sys
 
-from ..yolov7.models.experimental import attempt_load
-from ..yolov7.utils.general import scale_coords, non_max_suppression
-from ..yolov7.utils.plots import plot_one_box
+sys.path.insert(
+    0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../yolov7"))
+)
+from models.experimental import attempt_load
+from utils.general import scale_coords, non_max_suppression
+from utils.plots import plot_one_box
 
 
 def load_model(model_path):

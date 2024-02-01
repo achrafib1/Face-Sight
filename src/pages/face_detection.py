@@ -3,6 +3,12 @@ import streamlit.components.v1 as components
 import base64
 from PIL import Image, ImageOps
 import numpy as np
+
+import os
+import sys
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+
 from src.utils.video_helper import VideoTransformer, process_frame
 from streamlit_webrtc import webrtc_streamer
 from src.utils.model_loader import load_model
