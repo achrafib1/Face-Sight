@@ -41,3 +41,19 @@ class VideoTransformer(VideoTransformerBase):
             self.plot_one_box,
         )
         return img
+
+
+def create_videotransformer(
+    model, names, images, scale_coords, non_max_suppression, plot_one_box
+):
+    def _create_videotransformer():
+        return VideoTransformer(
+            model,
+            names,
+            images,
+            scale_coords,
+            non_max_suppression,
+            plot_one_box,
+        )
+
+    return _create_videotransformer

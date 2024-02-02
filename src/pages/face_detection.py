@@ -9,7 +9,11 @@ import sys
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
-from src.utils.video_helper import VideoTransformer, process_frame
+from src.utils.video_helper import (
+    VideoTransformer,
+    process_frame,
+    create_videotransformer,
+)
 from streamlit_webrtc import webrtc_streamer
 from src.utils.model_loader import load_model
 from src.utils.predict import predict
@@ -117,16 +121,16 @@ def show():
                 if detection_type == "Real-Time Detection":
                     st.sidebar.write("Real-Time Detection is selected")
                     st.header("Real Time Detection")
-                    videotransformer = VideoTransformer(
-                        model,
-                        names,
-                        images,
-                        scale_coords,
-                        non_max_suppression,
-                        plot_one_box,
-                    )
                     webrtc_streamer(
-                        key="example", video_transformer_factory=videotransformer
+                        key="example",
+                        video_transformer_factory=create_videotransformer(
+                            model,
+                            names,
+                            images,
+                            scale_coords,
+                            non_max_suppression,
+                            plot_one_box,
+                        ),
                     )
 
             with col2:
