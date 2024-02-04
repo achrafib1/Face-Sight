@@ -8,7 +8,7 @@ def predict(
 ):
     if image is None:
         print("Error: Could not read image")
-        return None, None
+        return None, None, None
     else:
         # Process the image
         pred, image, processed_image, original_size = process_image(
@@ -16,7 +16,7 @@ def predict(
         )
 
         # Draw boxes on the image
-        faces, image_with_boxes = draw_boxes(
+        boxes, faces, image_with_boxes = draw_boxes(
             pred,
             image,
             processed_image,
@@ -26,4 +26,4 @@ def predict(
             scale_coords,
             plot_one_box,
         )
-        return faces, image_with_boxes
+        return faces, boxes, image_with_boxes

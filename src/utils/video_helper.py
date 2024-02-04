@@ -9,11 +9,11 @@ def process_frame(
     frame, model, names, faces, non_max_suppression, scale_coords, plot_one_box
 ):
     # Make prediction
-    _, image_with_boxes = predict(
+    _, boxes, image_with_boxes = predict(
         frame, model, names, faces, scale_coords, non_max_suppression, plot_one_box
     )
 
-    return image_with_boxes
+    return boxes, image_with_boxes
 
 
 class VideoTransformer(VideoTransformerBase):
@@ -31,7 +31,7 @@ class VideoTransformer(VideoTransformerBase):
         img = frame.to_ndarray(format="bgr24")
 
         # Process the image
-        img = process_frame(
+        _, img = process_frame(
             img,
             self.model,
             self.names,
