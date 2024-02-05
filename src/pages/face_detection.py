@@ -104,7 +104,7 @@ def show():
                     components.html(img_container, height=320)
                     if st.button("Predict", use_container_width=True):
                         st.write("predict button is pressed")
-                        _, image_with_boxes = predict(
+                        _, _, image_with_boxes = predict(
                             img_array,
                             model,
                             names,
