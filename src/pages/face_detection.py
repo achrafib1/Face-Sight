@@ -119,6 +119,15 @@ def show():
                 if detection_type == "Real-Time Detection":
                     st.sidebar.write("Real-Time Detection is selected")
                     st.header("Real Time Detection")
+                    strategies = st.sidebar.multiselect(
+                        "Select the features to apply",
+                        options=[
+                            "blur_faces",
+                            "whiten_background",
+                        ],
+                        default=["blur_faces"],
+                        label_visibility="visible",
+                    )
                     webrtc_streamer(
                         key="example",
                         video_transformer_factory=create_videotransformer(
@@ -128,6 +137,7 @@ def show():
                             scale_coords,
                             non_max_suppression,
                             plot_one_box,
+                            strategies,
                         ),
                     )
 

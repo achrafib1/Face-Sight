@@ -60,7 +60,7 @@ class VideoTransformer(VideoTransformerBase):
         scale_coords,
         non_max_suppression,
         plot_one_box,
-        strategy="blur_faces",
+        strategies=None,
     ):
         self.model = model
         self.names = names
@@ -68,7 +68,7 @@ class VideoTransformer(VideoTransformerBase):
         self.non_max_suppression = non_max_suppression
         self.scale_coords = scale_coords
         self.plot_one_box = plot_one_box
-        self.strategy = strategy
+        self.strategies = strategies if strategies is not None else []
 
     def transform(self, frame):
         img = frame.to_ndarray(format="bgr24")
@@ -83,16 +83,17 @@ class VideoTransformer(VideoTransformerBase):
             self.scale_coords,
             self.plot_one_box,
         )
-        if self.strategy == "blur_faces":
-            img = blur_faces(img, boxes)
-        if self.strategy == "whiten_background":
-            img = whiten_background(img, boxes)
+        for strategy in self.strategies:
+            if strategy == "blur_faces":
+                img = blur_faces(img, boxes)
+            if strategy == "whiten_background":
+                img = whiten_background(img, boxes)
 
         return img
 
 
 def create_videotransformer(
-    model, names, images, scale_coords, non_max_suppression, plot_one_box
+    model, names, images, scale_coords, non_max_suppression, plot_one_box, strategies
 ):
     def _create_videotransformer():
         return VideoTransformer(
@@ -102,6 +103,7 @@ def create_videotransformer(
             scale_coords,
             non_max_suppression,
             plot_one_box,
+            strategies,
         )
 
     return _create_videotransformer
