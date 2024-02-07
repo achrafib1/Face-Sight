@@ -4,7 +4,14 @@ from .box_drawer import draw_boxes
 
 
 def predict(
-    image, model, names, faces, scale_coords, non_max_suppression, plot_one_box
+    image,
+    model,
+    names,
+    faces,
+    scale_coords,
+    non_max_suppression,
+    plot_one_box,
+    strategies,
 ):
     if image is None:
         print("Error: Could not read image")
@@ -25,5 +32,6 @@ def predict(
             faces,
             scale_coords,
             plot_one_box,
+            strategies,
         )
         return faces, boxes, image_with_boxes

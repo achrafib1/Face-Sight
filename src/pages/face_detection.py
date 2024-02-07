@@ -9,12 +9,11 @@ import sys
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
-from src.utils.video_helper import (
-    create_videotransformer,
-)
+from src.utils.video_helper import create_videotransformer
 from streamlit_webrtc import webrtc_streamer
 from src.utils.model_loader import load_model
 from src.utils.predict import predict
+from src.utils.box_drawer import blur_faces
 
 
 def show():
@@ -107,7 +106,7 @@ def show():
                     components.html(img_container, height=320)
                     if st.button("Predict", use_container_width=True):
                         st.write("predict button is pressed")
-                        _, _, image_with_boxes = predict(
+                        v, bx, image_with_boxes = predict(
                             img_array,
                             model,
                             names,
@@ -115,10 +114,14 @@ def show():
                             scale_coords,
                             non_max_suppression,
                             plot_one_box,
+                            [],
                         )
                         # if len(images) > 0:
                         #     images.append(image_with_boxes)
                         st.write(len(images))
+                        # st.write(type(bx))
+                        # st.write(bx)
+                        # st.image(image_with_boxes)
                 if detection_type == "Real-Time Detection":
                     st.sidebar.write("Real-Time Detection is selected")
                     st.header("Real Time Detection")
