@@ -19,7 +19,10 @@ from src.utils.predict import predict
 
 def show():
     st.set_page_config(page_title="Detection Page", layout="wide")
-    st.markdown("<style> ul {display: none;} </style>", unsafe_allow_html=True)
+    st.markdown(
+        "<style>  ul[data-testid=stSidebarNavItems]  {display: none;} </style>",
+        unsafe_allow_html=True,
+    )
     st.sidebar.title("Navigation")
     images = []
     page = st.sidebar.radio("Go to", ["Detection Page", "Home"])
