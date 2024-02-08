@@ -12,6 +12,7 @@ def predict(
     non_max_suppression,
     plot_one_box,
     strategies,
+    background,
 ):
     if image is None:
         print("Error: Could not read image")
@@ -33,5 +34,6 @@ def predict(
             scale_coords,
             plot_one_box,
             strategies,
+            background,
         )
         return faces, boxes, image_with_boxes

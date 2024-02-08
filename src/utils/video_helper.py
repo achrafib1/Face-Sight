@@ -16,6 +16,7 @@ def process_frame(
     scale_coords,
     plot_one_box,
     strategies,
+    background,
 ):
     # Make prediction
     _, boxes, image_with_boxes = predict(
@@ -27,6 +28,7 @@ def process_frame(
         non_max_suppression,
         plot_one_box,
         strategies,
+        background,
     )
 
     return boxes, image_with_boxes
@@ -42,6 +44,7 @@ class VideoTransformer(VideoTransformerBase):
         non_max_suppression,
         plot_one_box,
         strategies=None,
+        background="#56ecd5",
     ):
         self.model = model
         self.names = names
@@ -50,6 +53,7 @@ class VideoTransformer(VideoTransformerBase):
         self.scale_coords = scale_coords
         self.plot_one_box = plot_one_box
         self.strategies = strategies if strategies is not None else []
+        self.background = background
 
     def transform(self, frame):
         img = frame.to_ndarray(format="bgr24")
@@ -64,6 +68,7 @@ class VideoTransformer(VideoTransformerBase):
             self.scale_coords,
             self.plot_one_box,
             self.strategies,
+            self.background,
         )
         # for strategy in self.strategies:
         #     if strategy == "blur_faces":
@@ -76,7 +81,14 @@ class VideoTransformer(VideoTransformerBase):
 
 
 def create_videotransformer(
-    model, names, images, scale_coords, non_max_suppression, plot_one_box, strategies
+    model,
+    names,
+    images,
+    scale_coords,
+    non_max_suppression,
+    plot_one_box,
+    strategies,
+    background="#56ecd5",
 ):
     def _create_videotransformer():
         return VideoTransformer(
@@ -87,6 +99,7 @@ def create_videotransformer(
             non_max_suppression,
             plot_one_box,
             strategies,
+            background,
         )
 
     return _create_videotransformer
