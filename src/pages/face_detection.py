@@ -14,6 +14,7 @@ from streamlit_webrtc import webrtc_streamer
 from src.utils.model_loader import load_model
 from src.utils.predict import predict
 from src.utils.box_drawer import blur_faces
+import cv2
 
 
 def show():
@@ -39,6 +40,45 @@ def show():
             ["Upload Image", "Real-Time Detection"],
             index=None,
         )
+        features_expander = st.sidebar.expander("Features")
+        strategies = features_expander.multiselect(
+            "Select the features to apply",
+            options=[
+                "blur_faces",
+                "Change Background",
+            ],
+            default=["blur_faces"],
+            label_visibility="visible",
+        )
+        background_image = ""
+        # If the user selects "Change Background"
+        if "Change Background" in strategies:
+            background_type = features_expander.radio(
+                "Choose the type of background change",
+                ("Color", "Image"),
+            )
+
+            if background_type == "Color":
+                # Show a color picker
+                color = features_expander.color_picker("Choose a background color")
+
+                # Use the chosen color as the background
+                background_image = color
+
+            if background_type == "Image":
+                # Show a file uploader
+                file = features_expander.file_uploader(
+                    "Upload an image as the background"
+                )
+
+                # If the user uploads a file
+                if file is not None:
+                    # Open the image with PIL and convert it to a numpy array
+                    background_image = np.array(Image.open(file))
+
+                    # Convert the image from RGB to BGR (since OpenCV uses BGR)
+                    background_image = cv2.cvtColor(background_image, cv2.COLOR_RGB2BGR)
+
         with st.container(border=True):
             col1, col2 = st.columns(2, gap="large")
             with col1:
@@ -106,6 +146,7 @@ def show():
                     components.html(img_container, height=320)
                     if st.button("Predict", use_container_width=True):
                         st.write("predict button is pressed")
+                        st.write(background_image)
                         v, bx, image_with_boxes = predict(
                             img_array,
                             model,
@@ -114,26 +155,18 @@ def show():
                             scale_coords,
                             non_max_suppression,
                             plot_one_box,
-                            [],
+                            strategies,
+                            background_image,
                         )
                         # if len(images) > 0:
                         #     images.append(image_with_boxes)
                         st.write(len(images))
                         # st.write(type(bx))
                         # st.write(bx)
-                        # st.image(image_with_boxes)
+                        st.image(image_with_boxes)
                 if detection_type == "Real-Time Detection":
                     st.sidebar.write("Real-Time Detection is selected")
                     st.header("Real Time Detection")
-                    strategies = st.sidebar.multiselect(
-                        "Select the features to apply",
-                        options=[
-                            "blur_faces",
-                            "whiten_background",
-                        ],
-                        default=["blur_faces"],
-                        label_visibility="visible",
-                    )
                     webrtc_streamer(
                         key="example",
                         video_transformer_factory=create_videotransformer(
@@ -144,6 +177,7 @@ def show():
                             non_max_suppression,
                             plot_one_box,
                             strategies,
+                            background_image,
                         ),
                     )
 

@@ -23,7 +23,7 @@ def whiten_background(image, boxes, background):
 
         background = background.lstrip("#")
         background = tuple(int(background[i : i + 2], 16) for i in (0, 2, 4))
-        background = background[::-1]  # Reverse the tuple to get BGR
+        # background = background[::-1]  # Reverse the tuple to get BGR
         background_image = np.ones_like(image) * np.array(background, dtype=np.uint8)
     else:
 
@@ -77,7 +77,7 @@ def draw_boxes(
             for strategy in strategies:
                 if strategy == "blur_faces":
                     image = blur_faces(image, boxes)
-                if strategy == "whiten_background":
+                if strategy == "Change Background":
                     image = whiten_background(image, boxes, background)
 
     # Resize the image back to its original size
