@@ -11,7 +11,7 @@ def blur_faces(image, boxes):
     return image
 
 
-def whiten_background(image, boxes, background):
+def change_background(image, boxes, background):
 
     # Create a mask of the same size as the image
     mask = np.zeros(image.shape[:2], dtype=np.uint8)
@@ -78,7 +78,7 @@ def draw_boxes(
                 if strategy == "blur_faces":
                     image = blur_faces(image, boxes)
                 if strategy == "Change Background":
-                    image = whiten_background(image, boxes, background)
+                    image = change_background(image, boxes, background)
 
     # Resize the image back to its original size
     image = cv2.resize(image, (original_size[1], original_size[0]))
