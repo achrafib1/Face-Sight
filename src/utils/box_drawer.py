@@ -42,6 +42,34 @@ def change_background(image, boxes, background):
     return new_image
 
 
+def change_face_color(image, boxes, color):
+
+    hex_color = color.lstrip("#")
+    bgr_color = np.array(
+        [[[int(hex_color[i : i + 2], 16) for i in (4, 2, 0)]]], dtype=np.uint8
+    )  # Reverse the tuple to get BGR and convert to 3D numpy array
+    desired_hsv = cv2.cvtColor(bgr_color, cv2.COLOR_BGR2HSV)[0, 0]
+
+    for box in boxes:
+        x1, y1, x2, y2 = box
+        face_region = image[int(y1) : int(y2), int(x1) : int(x2)]
+
+        # Convert the face region to HSV
+        hsv = cv2.cvtColor(face_region, cv2.COLOR_BGR2HSV)
+
+        # Change the hue and saturation to the desired color
+        hsv[..., 0] = desired_hsv[0]
+        hsv[..., 1] = desired_hsv[1]
+
+        # Convert to RGB
+        face_region = cv2.cvtColor(hsv, cv2.COLOR_HSV2RGB)
+
+        # Replace the face region in the original image
+        image[int(y1) : int(y2), int(x1) : int(x2)] = face_region
+
+    return image
+
+
 def draw_boxes(
     pred,
     image,
@@ -53,6 +81,7 @@ def draw_boxes(
     plot_one_box,
     strategies,
     background="#56ecd5",
+    color="#56ecd5",
 ):
     boxes = []  # List to store the bounding boxes
     # Process the predictions
@@ -79,6 +108,8 @@ def draw_boxes(
                     image = blur_faces(image, boxes)
                 if strategy == "Change Background":
                     image = change_background(image, boxes, background)
+                if strategy == "change_face_color":
+                    image = change_face_color(image, boxes, color)
 
     # Resize the image back to its original size
     image = cv2.resize(image, (original_size[1], original_size[0]))
