@@ -47,11 +47,14 @@ def show():
                 "blur_faces",
                 "Change Background",
                 "change_face_color",
+                "replace_faces",
             ],
             default=["blur_faces"],
             label_visibility="visible",
         )
         background_image = ""
+        face_color = ""
+        image_replacement = ""
         # If the user selects "Change Background"
         if "Change Background" in strategies:
             background_type = features_expander.radio(
@@ -79,6 +82,26 @@ def show():
 
                     # Convert the image from RGB to BGR (since OpenCV uses BGR)
                     background_image = cv2.cvtColor(background_image, cv2.COLOR_RGB2BGR)
+
+        if "change_face_color" in strategies:
+            # Show a color picker
+            fcolor = features_expander.color_picker("Choose a background color")
+
+            # Use the chosen color as the background
+            face_color = fcolor
+
+        if "replace_faces" in strategies:
+            file = features_expander.file_uploader(
+                "Upload an image as the face image replacement"
+            )
+
+            # If the user uploads a file
+            if file is not None:
+                # Open the image with PIL and convert it to a numpy array
+                image_replacement = np.array(Image.open(file))
+
+                # Convert the image from RGB to BGR (since OpenCV uses BGR)
+                image_replacement = cv2.cvtColor(image_replacement, cv2.COLOR_RGB2BGR)
 
         with st.container(border=True):
             col1, col2 = st.columns(2, gap="large")
@@ -158,13 +181,15 @@ def show():
                             plot_one_box,
                             strategies,
                             background_image,
+                            face_color,
+                            image_replacement,
                         )
                         # if len(images) > 0:
                         #     images.append(image_with_boxes)
                         st.write(len(images))
                         # st.write(type(bx))
                         # st.write(bx)
-                        st.image(image_with_boxes)
+                        # st.image(image_with_boxes)
                 if detection_type == "Real-Time Detection":
                     st.sidebar.write("Real-Time Detection is selected")
                     st.header("Real Time Detection")

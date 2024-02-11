@@ -70,6 +70,22 @@ def change_face_color(image, boxes, color):
     return image
 
 
+def replace_faces(image, boxes, replacement):
+    if replacement is not None and type(replacement) == np.ndarray:
+        for box in boxes:
+            x1, y1, x2, y2 = box
+            face_width = int(x2) - int(x1)
+            face_height = int(y2) - int(y1)
+
+            # Resize the replacement image to fit the face region
+            replacement_resized = cv2.resize(replacement, (face_width, face_height))
+
+            # Replace the face region with the replacement image
+            image[int(y1) : int(y2), int(x1) : int(x2)] = replacement_resized
+
+    return image
+
+
 def draw_boxes(
     pred,
     image,
@@ -82,6 +98,7 @@ def draw_boxes(
     strategies,
     background="#56ecd5",
     color="#56ecd5",
+    image_replacement=None,
 ):
     boxes = []  # List to store the bounding boxes
     # Process the predictions
@@ -110,6 +127,8 @@ def draw_boxes(
                     image = change_background(image, boxes, background)
                 if strategy == "change_face_color":
                     image = change_face_color(image, boxes, color)
+                if strategy == "replace_faces":
+                    image = replace_faces(image, boxes, image_replacement)
 
     # Resize the image back to its original size
     image = cv2.resize(image, (original_size[1], original_size[0]))

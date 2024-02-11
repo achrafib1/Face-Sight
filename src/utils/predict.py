@@ -13,6 +13,8 @@ def predict(
     plot_one_box,
     strategies,
     background,
+    color="#56ecd5",
+    image_replacement=None,
 ):
     if image is None:
         print("Error: Could not read image")
@@ -35,5 +37,7 @@ def predict(
             plot_one_box,
             strategies,
             background,
+            color,
+            image_replacement,
         )
         return faces, boxes, image_with_boxes
