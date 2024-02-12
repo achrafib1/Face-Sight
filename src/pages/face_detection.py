@@ -48,6 +48,7 @@ def show():
                 "Change Background",
                 "change_face_color",
                 "replace_faces",
+                "highlight_edges",
             ],
             default=["blur_faces"],
             label_visibility="visible",

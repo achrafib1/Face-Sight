@@ -86,6 +86,34 @@ def replace_faces(image, boxes, replacement):
     return image
 
 
+def highlight_edges(image, boxes, face_color="#56ecd5"):
+
+    hex_color = face_color.lstrip("#")
+    face_color = tuple(
+        int(hex_color[i : i + 2], 16) for i in (4, 2, 0)
+    )  # Reverse the tuple to get BGR
+    # Convert the image to grayscale
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+    # Detect edges in the image
+    edges = cv2.Canny(gray, 50, 150)
+
+    # Create a copy of the original image to draw the edges on
+    # edge_image = image.copy()
+    edge_image = np.zeros_like(image)
+
+    # Draw the edges in white
+    edge_image[edges != 0] = (255, 255, 255)
+
+    # Highlight the edges of the detected faces with the chosen color
+    for box in boxes:
+        x1, y1, x2, y2 = box
+        face_edges = edges[int(y1) : int(y2), int(x1) : int(x2)]
+        edge_image[int(y1) : int(y2), int(x1) : int(x2)][face_edges != 0] = face_color
+
+    return edge_image
+
+
 def draw_boxes(
     pred,
     image,
@@ -129,6 +157,8 @@ def draw_boxes(
                     image = change_face_color(image, boxes, color)
                 if strategy == "replace_faces":
                     image = replace_faces(image, boxes, image_replacement)
+                if strategy == "highlight_edges":
+                    image = highlight_edges(image, boxes)
 
     # Resize the image back to its original size
     image = cv2.resize(image, (original_size[1], original_size[0]))
