@@ -114,6 +114,28 @@ def highlight_edges(image, boxes, face_color="#56ecd5"):
     return edge_image
 
 
+def pixelate_faces(image, boxes, pixel_size=10):
+
+    # Create a copy of the original image to draw on
+    pixelated_image = image.copy()
+
+    for box in boxes:
+        x1, y1, x2, y2 = box
+        face = pixelated_image[int(y1) : int(y2), int(x1) : int(x2)]
+        # Resize the face to a smaller size to create the pixelation effect
+        small = cv2.resize(
+            face, (pixel_size, pixel_size), interpolation=cv2.INTER_LINEAR
+        )
+        # Resize the small image back to the size of the face
+        face_pixelated = cv2.resize(
+            small, (face.shape[1], face.shape[0]), interpolation=cv2.INTER_NEAREST
+        )
+        # Replace the face in the image with the pixelated version
+        pixelated_image[int(y1) : int(y2), int(x1) : int(x2)] = face_pixelated
+
+    return pixelated_image
+
+
 def draw_boxes(
     pred,
     image,
@@ -159,6 +181,8 @@ def draw_boxes(
                     image = replace_faces(image, boxes, image_replacement)
                 if strategy == "highlight_edges":
                     image = highlight_edges(image, boxes)
+                if strategy == "pixelate_faces":
+                    image = pixelate_faces(image, boxes)
 
     # Resize the image back to its original size
     image = cv2.resize(image, (original_size[1], original_size[0]))

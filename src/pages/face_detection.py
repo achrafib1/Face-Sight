@@ -49,6 +49,7 @@ def show():
                 "change_face_color",
                 "replace_faces",
                 "highlight_edges",
+                "pixelate_faces",
             ],
             default=["blur_faces"],
             label_visibility="visible",
@@ -190,7 +191,7 @@ def show():
                         st.write(len(images))
                         # st.write(type(bx))
                         # st.write(bx)
-                        # st.image(image_with_boxes)
+                        st.image(image_with_boxes)
                 if detection_type == "Real-Time Detection":
                     st.sidebar.write("Real-Time Detection is selected")
                     st.header("Real Time Detection")
