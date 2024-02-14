@@ -43,6 +43,17 @@ def change_background(image, boxes, background):
 
 
 def change_face_color(image, boxes, color):
+    """
+    Changes the color of the detected faces in the image.
+
+    Parameters:
+    - image: The original image.
+    - boxes: A list of bounding boxes for each detected face. Each box is a tuple (x1, y1, x2, y2).
+    - color: The desired color for the faces in hexadecimal format.
+
+    Returns:
+    - The image with the detected faces changed to the desired color.
+    """
 
     hex_color = color.lstrip("#")
     bgr_color = np.array(
@@ -115,6 +126,17 @@ def highlight_edges(image, boxes, face_color="#56ecd5"):
 
 
 def pixelate_faces(image, boxes, pixel_size=10):
+    """
+    Pixelates the detected faces in the image.
+
+    Parameters:
+    - image: The original image.
+    - boxes: A list of bounding boxes for each detected face. Each box is a tuple (x1, y1, x2, y2).
+    - pixel_size: The size of the pixels for the pixelation effect.
+
+    Returns:
+    - The image with the detected faces pixelated.
+    """
 
     # Create a copy of the original image to draw on
     pixelated_image = image.copy()
