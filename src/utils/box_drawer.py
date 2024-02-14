@@ -175,9 +175,9 @@ def draw_boxes(
                     image = blur_faces(image, boxes)
                 if strategy == "Change Background":
                     image = change_background(image, boxes, background)
-                if strategy == "change_face_color":
+                if strategy == "change face_color":
                     image = change_face_color(image, boxes, color)
-                if strategy == "replace_faces":
+                if strategy == "replace faces":
                     image = replace_faces(image, boxes, image_replacement)
                 if strategy == "highlight_edges":
                     image = highlight_edges(image, boxes)
