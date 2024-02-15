@@ -82,6 +82,18 @@ def change_face_color(image, boxes, color):
 
 
 def replace_faces(image, boxes, replacement):
+    """
+    Replaces the detected faces in the image with a given replacement image.
+
+    Parameters:
+    - image: The original image.
+    - boxes: A list of bounding boxes for each detected face. Each box is a tuple (x1, y1, x2, y2).
+    - replacement: The replacement image as a numpy array.
+
+    Returns:
+    - The image with the detected faces replaced by the replacement image.
+    """
+
     if replacement is not None and type(replacement) == np.ndarray:
         for box in boxes:
             x1, y1, x2, y2 = box
@@ -98,6 +110,17 @@ def replace_faces(image, boxes, replacement):
 
 
 def highlight_edges(image, boxes, face_color="#56ecd5"):
+    """
+    Highlights the edges of the detected faces in the image.
+
+    Parameters:
+    - image: The original image.
+    - boxes: A list of bounding boxes for each detected face. Each box is a tuple (x1, y1, x2, y2).
+    - face_color: The color to use for highlighting the edges of the faces, in hexadecimal format.
+
+    Returns:
+    - The image with the edges of the detected faces highlighted.
+    """
 
     hex_color = face_color.lstrip("#")
     face_color = tuple(
