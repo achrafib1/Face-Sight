@@ -23,6 +23,17 @@ def blur_faces(image, boxes):
 
 
 def change_background(image, boxes, background):
+    """
+    Changes the background of the detected faces in the image.
+
+    Parameters:
+    - image: The original image.
+    - boxes: A list of bounding boxes for each detected face. Each box is a tuple (x1, y1, x2, y2).
+    - background: The desired background color in hexadecimal format or an image as a numpy array.
+
+    Returns:
+    - The image with the background of the detected faces changed.
+    """
 
     # Create a mask of the same size as the image
     mask = np.zeros(image.shape[:2], dtype=np.uint8)
