@@ -3,6 +3,17 @@ import numpy as np
 
 
 def blur_faces(image, boxes):
+    """
+    Blurs the detected faces in the image.
+
+    Parameters:
+    - image: The original image.
+    - boxes: A list of bounding boxes for each detected face. Each box is a tuple (x1, y1, x2, y2).
+
+    Returns:
+    - The image with the detected faces blurred.
+    """
+
     for box in boxes:
         x1, y1, x2, y2 = box
         face = image[int(y1) : int(y2), int(x1) : int(x2)]
