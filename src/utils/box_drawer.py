@@ -217,6 +217,29 @@ def draw_boxes(
     color="#56ecd5",
     image_replacement=None,
 ):
+    """
+    Draws bounding boxes on the detected faces in the image and applies various strategies.
+
+    Parameters:
+    - pred: The model's predictions.
+    - image: The original image.
+    - img: The reshaped and normalized image tensor.
+    - names: The names of the classes.
+    - original_size: The original size of the image.
+    - faces: A list to store the detected faces.
+    - scale_coords: The function to rescale the coordinates to the original image size.
+    - plot_one_box: The function to draw a bounding box on the image.
+    - strategies: A list of strategies to apply to the image.
+    - background: The desired background color in hexadecimal format.
+    - color: The desired color for the faces in hexadecimal format.
+    - image_replacement: The replacement image as a numpy array.
+
+    Returns:
+    - faces: The list of detected faces.
+    - boxes: The list of bounding boxes for each detected face.
+    - image: The image with the bounding boxes drawn and the strategies applied.
+    """
+
     boxes = []  # List to store the bounding boxes
     # Process the predictions
     for det in pred:
