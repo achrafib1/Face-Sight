@@ -3,6 +3,21 @@ import torch
 
 
 def process_image(image, model, non_max_suppression):
+    """
+    Processes an image for object detection.
+
+    Parameters:
+    - image: The original image.
+    - model: The object detection model to use.
+    - non_max_suppression: The non-maximum suppression function to apply to the model's predictions.
+
+    Returns:
+    - pred: The model's predictions after non-maximum suppression.
+    - image: The resized image.
+    - img: The reshaped and normalized image tensor.
+    - original_size: The original size of the image.
+    """
+
     # Save the original image size
     original_size = image.shape[:2]
 
