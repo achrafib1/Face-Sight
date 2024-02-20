@@ -18,6 +18,25 @@ def process_frame(
     strategies,
     background,
 ):
+    """
+    Processes a frame for object detection and applies various strategies.
+
+    Parameters:
+    - frame: The original frame.
+    - model: The object detection model to use.
+    - names: The names of the classes.
+    - faces: A list to store the detected faces.
+    - non_max_suppression: The non-maximum suppression function to apply to the model's predictions.
+    - scale_coords: The function to rescale the coordinates to the original image size.
+    - plot_one_box: The function to draw a bounding box on the image.
+    - strategies: A list of strategies to apply to the image.
+    - background: The desired background color in hexadecimal format.
+
+    Returns:
+    - boxes: The list of bounding boxes for each detected face.
+    - image_with_boxes: The image with the bounding boxes drawn and the strategies applied.
+    """
+
     # Make prediction
     _, boxes, image_with_boxes = predict(
         frame,
@@ -31,6 +50,7 @@ def process_frame(
         background,
     )
 
+    # Return the list of bounding boxes and the image with the bounding boxes drawn and the strategies applied
     return boxes, image_with_boxes
 
 
