@@ -55,6 +55,36 @@ def process_frame(
 
 
 class VideoTransformer(VideoTransformerBase):
+    """
+    A class used to transform video frames for object detection.
+
+    ...
+
+    Attributes
+    ----------
+    model : object
+        The object detection model to use.
+    names : list
+        The names of the classes that the model can predict.
+    faces : list
+        A list to store the detected faces.
+    scale_coords : function
+        The function to rescale the coordinates to the original image size.
+    non_max_suppression : function
+        The non-maximum suppression function to apply to the model's predictions.
+    plot_one_box : function
+        The function to draw a bounding box on the image.
+    strategies : list
+        A list of strategies to apply to the image.
+    background : str
+        The desired background color in hexadecimal format.
+
+    Methods
+    -------
+    transform(frame)
+        Processes a frame for object detection and applies various strategies.
+    """
+
     def __init__(
         self,
         model,
@@ -76,6 +106,17 @@ class VideoTransformer(VideoTransformerBase):
         self.background = background
 
     def transform(self, frame):
+        """
+        Processes a frame for object detection and applies various strategies.
+
+        Parameters:
+        - frame: The original frame.
+
+        Returns:
+        - boxes: The list of bounding boxes for each detected face.
+        - img: The image with the bounding boxes drawn and the strategies applied.
+        """
+
         img = frame.to_ndarray(format="bgr24")
 
         # Process the image
