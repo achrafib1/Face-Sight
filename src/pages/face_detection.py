@@ -46,9 +46,9 @@ def show():
             options=[
                 "blur_faces",
                 "Change Background",
-                "change face_color",
+                "change face color",
                 "replace faces",
-                "highlight_edges",
+                "highlight edges",
                 "pixelate_faces",
             ],
             default=["blur_faces"],
