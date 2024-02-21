@@ -151,7 +151,31 @@ def create_videotransformer(
     strategies,
     background="#56ecd5",
 ):
+    """
+    Creates a function that returns a VideoTransformer instance.
+
+    Parameters:
+    - model: The object detection model to use.
+    - names: The names of the classes that the model can predict.
+    - images: A list to store the processed images.
+    - scale_coords: The function to rescale the coordinates to the original image size.
+    - non_max_suppression: The non-maximum suppression function to apply to the model's predictions.
+    - plot_one_box: The function to draw a bounding box on the image.
+    - strategies: A list of strategies to apply to the image.
+    - background: The desired background color in hexadecimal format.
+
+    Returns:
+    - _create_videotransformer: A function that returns a VideoTransformer instance when called.
+    """
+
     def _create_videotransformer():
+        """
+        Returns a VideoTransformer instance with the provided parameters.
+
+        Returns:
+        - A VideoTransformer instance.
+        """
+
         return VideoTransformer(
             model,
             names,
