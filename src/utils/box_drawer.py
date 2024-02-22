@@ -265,11 +265,11 @@ def draw_boxes(
                     image = blur_faces(image, boxes)
                 if strategy == "Change Background":
                     image = change_background(image, boxes, background)
-                if strategy == "change face_color":
+                if strategy == "change face color":
                     image = change_face_color(image, boxes, color)
                 if strategy == "replace faces":
                     image = replace_faces(image, boxes, image_replacement)
-                if strategy == "highlight_edges":
+                if strategy == "highlight edges":
                     image = highlight_edges(image, boxes)
                 if strategy == "pixelate_faces":
                     image = pixelate_faces(image, boxes)
