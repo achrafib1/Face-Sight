@@ -261,7 +261,7 @@ def draw_boxes(
                         xyxy, image, label=label, color=(255, 0, 0), line_thickness=3
                     )  # Draw the bounding box on the original image
             for strategy in strategies:
-                if strategy == "blur_faces":
+                if strategy == "blur faces":
                     image = blur_faces(image, boxes)
                 if strategy == "Change Background":
                     image = change_background(image, boxes, background)
@@ -271,7 +271,7 @@ def draw_boxes(
                     image = replace_faces(image, boxes, image_replacement)
                 if strategy == "highlight edges":
                     image = highlight_edges(image, boxes)
-                if strategy == "pixelate_faces":
+                if strategy == "pixelate faces":
                     image = pixelate_faces(image, boxes)
 
     # Resize the image back to its original size

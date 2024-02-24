@@ -44,12 +44,12 @@ def show():
         strategies = features_expander.multiselect(
             "Select the features to apply",
             options=[
-                "blur_faces",
+                "blur faces",
                 "Change Background",
                 "change face color",
                 "replace faces",
                 "highlight edges",
-                "pixelate_faces",
+                "pixelate faces",
             ],
             default=["blur_faces"],
             label_visibility="visible",
