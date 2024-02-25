@@ -51,7 +51,7 @@ def show():
                 "highlight edges",
                 "pixelate faces",
             ],
-            default=["blur_faces"],
+            default=["blur faces"],
             label_visibility="visible",
         )
         background_image = ""
