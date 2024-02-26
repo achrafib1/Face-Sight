@@ -34,13 +34,18 @@ def show():
         st.switch_page("pages/home.py")
     if page == "Detection Page":
         st.title("Detection Page")
+        # Set a subheader in the sidebar
         st.sidebar.subheader("Detection Configuration")
+        # Create a radio button in the sidebar to select the detection type
+        # The options are "Upload Image" and "Real-Time Detection"
         detection_type = st.sidebar.radio(
             "Choose detection type",
             ["Upload Image", "Real-Time Detection"],
             index=None,
         )
+        # Create an expandable section in the sidebar
         features_expander = st.sidebar.expander("Features")
+        # create a multi-select box for the user to select the features to apply ,Within the "Features" section
         strategies = features_expander.multiselect(
             "Select the features to apply",
             options=[
@@ -54,6 +59,7 @@ def show():
             default=["blur faces"],
             label_visibility="visible",
         )
+        # Initialize variables for background_image, face_color, and image_replacement
         background_image = ""
         face_color = ""
         image_replacement = ""
