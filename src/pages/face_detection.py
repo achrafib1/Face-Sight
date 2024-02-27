@@ -63,22 +63,26 @@ def show():
         background_image = ""
         face_color = ""
         image_replacement = ""
-        # If the user selects "Change Background"
+        # If the user selects "Change Background" in the strategies multi-select box
         if "Change Background" in strategies:
+            # Create a radio button for the user to select the type of background change
+            # The options are "Color" and "Image"
             background_type = features_expander.radio(
                 "Choose the type of background change",
                 ("Color", "Image"),
             )
 
+            # If the user selects "Color" as the background type
             if background_type == "Color":
-                # Show a color picker
+                # Show a color picker to choose a background color
                 color = features_expander.color_picker("Choose a background color")
 
                 # Use the chosen color as the background
                 background_image = color
 
+            # If the user selects "Image" as the background type
             if background_type == "Image":
-                # Show a file uploader
+                # Show a file uploader to upload an image as the background
                 file = features_expander.file_uploader(
                     "Upload an image as the background"
                 )
