@@ -95,14 +95,18 @@ def show():
                     # Convert the image from RGB to BGR (since OpenCV uses BGR)
                     background_image = cv2.cvtColor(background_image, cv2.COLOR_RGB2BGR)
 
-        if "change_face_color" in strategies:
-            # Show a color picker
+        # If the user selects "change face color"  in the strategies multi-select box
+        if "change face color" in strategies:
+            # Show a color picker to choose a face color
             fcolor = features_expander.color_picker("Choose a background color")
 
             # Use the chosen color as the background
             face_color = fcolor
 
-        if "replace_faces" in strategies:
+        # If the user selects "replace faces"  in the strategies multi-select box
+        if "replace faces" in strategies:
+
+            # Display a file uploader to upload an image as the face image replacement
             file = features_expander.file_uploader(
                 "Upload an image as the face image replacement"
             )
