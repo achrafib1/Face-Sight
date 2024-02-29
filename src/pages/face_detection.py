@@ -140,6 +140,8 @@ def show():
                             </div>
                             """
                     components.html(choice_container, height=320)
+                # Load the model and related methods
+                # The loaded items include the model, names, scale_coords, non_max_suppression, and plot_one_box
                 (
                     model,
                     names,
@@ -147,18 +149,26 @@ def show():
                     non_max_suppression,
                     plot_one_box,
                 ) = load_model("src/models/model.pt")
+                # if the detection type is "Upload Image"
                 if detection_type == "Upload Image":
+                    # Display a file uploader in the sidebar for the user to upload an image
+                    # The accepted file types are jpg, jpeg, and png
                     uploaded_file = st.sidebar.file_uploader(
                         "Choose an image...", type=["jpg", "jpeg", "png"]
                     )
+                    # Initialize img_array as None
                     img_array = None
+                    # If the user uploads a file
                     if uploaded_file is not None:
                         # Convert the file to an image
+                        # Convert the uploaded file to a base64 string
                         img_str = base64.b64encode(uploaded_file.read()).decode()
                         img = Image.open(uploaded_file)
                         # Convert the image to a numpy array
                         img_array = np.array(img)
                     else:
+                        # If the user does not upload a file, use a default image located at "static/images/img_uplod.jpg"
+                        # Open the default image, read it as bytes, encode it as a base64 string, and decode it to utf-8
                         img_str = base64.b64encode(
                             open("static/images/img_uplod.jpg", "rb").read()
                         ).decode()
