@@ -194,9 +194,14 @@ def show():
                         </div>
                         """
                     components.html(img_container, height=320)
+                    # if the "Predict" button is pressed
                     if st.button("Predict", use_container_width=True):
+                        # If the button is pressed, write a message saying "predict button is pressed"
                         st.write("predict button is pressed")
                         st.write(background_image)
+                        # Call the predict function with the necessary parameters
+                        # The parameters include the image array, the model, the names, the images, the scale_coords, the non_max_suppression, the plot_one_box, the strategies, the background_image, the face_color, and the image_replacement
+                        # The function returns three values: v, bx, and image_with_boxes
                         v, bx, image_with_boxes = predict(
                             img_array,
                             model,
