@@ -221,9 +221,15 @@ def show():
                         # st.write(type(bx))
                         # st.write(bx)
                         # st.image(image_with_boxes)
+                # if the detection type is "Real-Time Detection
                 if detection_type == "Real-Time Detection":
+                    # If "Real-Time Detection" is selected, write a message in the sidebar saying "Real-Time Detection is selected"
                     st.sidebar.write("Real-Time Detection is selected")
+                    # Set the header of the main page to "Real Time Detection"
                     st.header("Real Time Detection")
+                    # Start a WebRTC streamer with the key "example"
+                    # The video_transformer_factory is set to the result of the create_videotransformer function
+                    # The create_videotransformer function is called with the necessary parameters, including the model, the names, the images, the scale_coords, the non_max_suppression, the plot_one_box, the strategies, and the background_image
                     webrtc_streamer(
                         key="example",
                         video_transformer_factory=create_videotransformer(
