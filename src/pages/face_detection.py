@@ -245,9 +245,12 @@ def show():
                     )
 
             with col2:
+                # Set the title of the column to "Detected Face"
                 st.title("Detected Face")
+                # Set a subheader with the number of detected faces
                 st.subheader("Number of detected faces : " + str(len(images)))
                 with st.container(border=True):
+                    # Set the background color of the markdown element to light gray
                     st.markdown(
                         f"""
                                 <style>
@@ -263,19 +266,29 @@ def show():
                     #     type=["jpg", "jpeg", "png"],
                     #     accept_multiple_files=True,
                     #   )
+
                     # Calculate the number of images per row
                     images_per_row = int(np.ceil(np.sqrt(len(images))))
+
+                    # If there is at least one image per row
                     if images_per_row > 0:
+                        # Loop through each image
                         for i in range(len(images)):
+                            # Convert the image from a numpy array to a PIL Image
                             image = Image.fromarray(images[i])
                             # Resize the image to a fixed size
                             images[i] = ImageOps.fit(image, (100, 100))
                         # Display the images in rows
                         for i in range(0, len(images), images_per_row):
+                            # Make a new row with the same number of columns as images per row
                             cols = st.columns(images_per_row)
+                            # Loop through each column in the row
                             for j in range(images_per_row):
+                                # Calculate the index of the image to display
                                 idx = i + j
+                                # If the index is less than the total number of images
                                 if idx < len(images):
+                                    # Display the image in the column
                                     cols[j].image(images[idx], use_column_width=True)
 
 
