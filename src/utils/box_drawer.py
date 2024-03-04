@@ -37,18 +37,26 @@ def change_background(image, boxes, background):
 
     # Create a mask of the same size as the image
     mask = np.zeros(image.shape[:2], dtype=np.uint8)
+    # For each bounding box in the list of boxes
     for box in boxes:
         x1, y1, x2, y2 = box
+        # Set the pixels within the bounding box in the mask to 255 (white)
         mask[int(y1) : int(y2), int(x1) : int(x2)] = 255
 
+    # If the background is a string (indicating a color in hexadecimal format)
     if isinstance(background, str):
 
+        # Remove the '#' from the start of the string
         background = background.lstrip("#")
+        # Convert the hexadecimal color to a tuple of RGB values
         background = tuple(int(background[i : i + 2], 16) for i in (0, 2, 4))
         # background = background[::-1]  # Reverse the tuple to get BGR
+        # Create a new image of the same size as the original image, filled with the background color
         background_image = np.ones_like(image) * np.array(background, dtype=np.uint8)
     else:
 
+        # If the background is not a string, it is an image
+        # Resize the background image to the same size as the original image
         background_image = cv2.resize(background, (image.shape[1], image.shape[0]))
 
     # Use the mask to segment the faces from the image
