@@ -84,18 +84,21 @@ def change_face_color(image, boxes, color):
     Returns:
     - The image with the detected faces changed to the desired color.
     """
-
+    # Remove the '#' from the start of the color string
     hex_color = color.lstrip("#")
+    # Convert the hexadecimal color to a tuple of BGR values and convert it to a 3D numpy array
     bgr_color = np.array(
         [[[int(hex_color[i : i + 2], 16) for i in (4, 2, 0)]]], dtype=np.uint8
     )  # Reverse the tuple to get BGR and convert to 3D numpy array
     desired_hsv = cv2.cvtColor(bgr_color, cv2.COLOR_BGR2HSV)[0, 0]
 
+    # For each bounding box in the list of boxes
     for box in boxes:
         x1, y1, x2, y2 = box
+        # Extract the face region from the image using the bounding box coordinates
         face_region = image[int(y1) : int(y2), int(x1) : int(x2)]
 
-        # Convert the face region to HSV
+        # Convert the face region from BGR to HSV
         hsv = cv2.cvtColor(face_region, cv2.COLOR_BGR2HSV)
 
         # Change the hue and saturation to the desired color
