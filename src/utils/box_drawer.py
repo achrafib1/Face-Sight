@@ -159,7 +159,9 @@ def highlight_edges(image, boxes, face_color="#56ecd5"):
     - The image with the edges of the detected faces highlighted.
     """
 
+    # Remove the '#' from the start of the color string
     hex_color = face_color.lstrip("#")
+    # Convert the hexadecimal color to a tuple of BGR values
     face_color = tuple(
         int(hex_color[i : i + 2], 16) for i in (4, 2, 0)
     )  # Reverse the tuple to get BGR
@@ -177,11 +179,15 @@ def highlight_edges(image, boxes, face_color="#56ecd5"):
     edge_image[edges != 0] = (255, 255, 255)
 
     # Highlight the edges of the detected faces with the chosen color
+    # For each bounding box in the list of boxes
     for box in boxes:
         x1, y1, x2, y2 = box
+        # Extract the edges within the bounding box
         face_edges = edges[int(y1) : int(y2), int(x1) : int(x2)]
+        # Set the pixels in the edge image where the face edges are detected to the desired color
         edge_image[int(y1) : int(y2), int(x1) : int(x2)][face_edges != 0] = face_color
 
+    # Return the edge image with the highlighted edges
     return edge_image
 
 
