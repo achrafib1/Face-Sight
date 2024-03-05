@@ -127,9 +127,12 @@ def replace_faces(image, boxes, replacement):
     - The image with the detected faces replaced by the replacement image.
     """
 
+    # Check if the replacement image is not None and is a numpy array
     if replacement is not None and type(replacement) == np.ndarray:
+        # For each bounding box in the list of boxes
         for box in boxes:
             x1, y1, x2, y2 = box
+            # Calculate the width and height of the face region
             face_width = int(x2) - int(x1)
             face_height = int(y2) - int(y1)
 
@@ -139,6 +142,7 @@ def replace_faces(image, boxes, replacement):
             # Replace the face region with the replacement image
             image[int(y1) : int(y2), int(x1) : int(x2)] = replacement_resized
 
+    # Return the image with the replaced faces
     return image
 
 
