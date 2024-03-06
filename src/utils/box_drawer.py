@@ -214,8 +214,11 @@ def pixelate_faces(image, boxes, pixel_size=10):
     # Create a copy of the original image to draw on
     pixelated_image = image.copy()
 
+    # For each bounding box in the list of boxes
     for box in boxes:
+        # Unpack the bounding box coordinates
         x1, y1, x2, y2 = box
+        # Extract the face region from the image using the bounding box coordinates
         face = pixelated_image[int(y1) : int(y2), int(x1) : int(x2)]
         # Resize the face to a smaller size to create the pixelation effect
         small = cv2.resize(
@@ -228,6 +231,7 @@ def pixelate_faces(image, boxes, pixel_size=10):
         # Replace the face in the image with the pixelated version
         pixelated_image[int(y1) : int(y2), int(x1) : int(x2)] = face_pixelated
 
+    # Return the image with the pixelated faces
     return pixelated_image
 
 
