@@ -14,11 +14,18 @@ def blur_faces(image, boxes):
     - The image with the detected faces blurred.
     """
 
+    # For each bounding box in the list of boxes
     for box in boxes:
+        # Unpack the bounding box coordinates
         x1, y1, x2, y2 = box
+        # Extract the face region from the image using the bounding box coordinates
         face = image[int(y1) : int(y2), int(x1) : int(x2)]
+        # Apply a Gaussian blur to the face region
+        # The kernel size is 21x21 and the standard deviation in the x and y directions is 30
         blurred_face = cv2.GaussianBlur(face, (21, 21), 30)
+        # Replace the face region in the original image with the blurred face
         image[int(y1) : int(y2), int(x1) : int(x2)] = blurred_face
+    # Return the image with the blurred faces
     return image
 
 
