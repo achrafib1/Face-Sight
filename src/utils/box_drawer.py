@@ -282,6 +282,7 @@ def draw_boxes(
             # Draw the bounding boxes on the image
             for *xyxy, conf, cls in reversed(det):
                 if conf > 0.4:
+                    # Unpack the coordinates of the bounding box
                     x1, y1, x2, y2 = xyxy
                     label = f"{names[int(cls)]} {conf:.2f}"
                     face = image[int(y1) : int(y2), int(x1) : int(x2)]
@@ -292,6 +293,7 @@ def draw_boxes(
                     plot_one_box(
                         xyxy, image, label=label, color=(255, 0, 0), line_thickness=3
                     )  # Draw the bounding box on the original image
+            # Apply the selected strategies to the detected faces
             for strategy in strategies:
                 if strategy == "blur faces":
                     image = blur_faces(image, boxes)
