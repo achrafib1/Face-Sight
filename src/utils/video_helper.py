@@ -177,6 +177,7 @@ def create_videotransformer(
         - A VideoTransformer instance.
         """
 
+        # Create a VideoTransformer instance with the provided parameters
         return VideoTransformer(
             model,
             names,
@@ -188,4 +189,5 @@ def create_videotransformer(
             background,
         )
 
+    # Return the function that creates a VideoTransformer instance
     return _create_videotransformer
