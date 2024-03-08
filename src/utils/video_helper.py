@@ -119,7 +119,7 @@ class VideoTransformer(VideoTransformerBase):
 
         img = frame.to_ndarray(format="bgr24")
 
-        # Process the image
+        # Process the image using the process_frame function
         boxes, img = process_frame(
             img,
             self.model,
@@ -138,6 +138,7 @@ class VideoTransformer(VideoTransformerBase):
         #     if strategy == "whiten_background":
         #         img = whiten_background(img, boxes)
 
+        # Return the list of bounding boxes and the processed image
         return img
 
 
