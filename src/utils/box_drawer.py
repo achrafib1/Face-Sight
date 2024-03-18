@@ -1,8 +1,9 @@
 import cv2
+from typing import List, Tuple
 import numpy as np
 
 
-def blur_faces(image, boxes):
+def blur_faces(image: np.ndarray, boxes: List[Tuple[int, int, int, int]]) -> np.ndarray:
     """
     Blurs the detected faces in the image.
 
