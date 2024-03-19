@@ -1,5 +1,5 @@
 import cv2
-from typing import List, Tuple
+from typing import List, Tuple, Union
 import numpy as np
 
 
@@ -30,7 +30,11 @@ def blur_faces(image: np.ndarray, boxes: List[Tuple[int, int, int, int]]) -> np.
     return image
 
 
-def change_background(image, boxes, background):
+def change_background(
+    image: np.ndarray,
+    boxes: List[Tuple[int, int, int, int]],
+    background: Union[str, np.ndarray],
+):
     """
     Changes the background of the detected faces in the image.
 
@@ -57,10 +61,12 @@ def change_background(image, boxes, background):
         # Remove the '#' from the start of the string
         background = background.lstrip("#")
         # Convert the hexadecimal color to a tuple of RGB values
-        background = tuple(int(background[i : i + 2], 16) for i in (0, 2, 4))
+        background_rgb = tuple(int(background[i : i + 2], 16) for i in (0, 2, 4))
         # background = background[::-1]  # Reverse the tuple to get BGR
         # Create a new image of the same size as the original image, filled with the background color
-        background_image = np.ones_like(image) * np.array(background, dtype=np.uint8)
+        background_image = np.ones_like(image) * np.array(
+            background_rgb, dtype=np.uint8
+        )
     else:
 
         # If the background is not a string, it is an image
