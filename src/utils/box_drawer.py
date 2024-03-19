@@ -86,7 +86,9 @@ def change_background(
     return new_image
 
 
-def change_face_color(image, boxes, color):
+def change_face_color(
+    image: np.ndarray, boxes: List[Tuple[int, int, int, int]], color: str
+) -> np.ndarray:
     """
     Changes the color of the detected faces in the image.
 
