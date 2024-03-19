@@ -1,5 +1,5 @@
 import cv2
-from typing import List, Tuple, Union
+from typing import List, Tuple, Optional, Union
 import numpy as np
 
 
@@ -130,7 +130,11 @@ def change_face_color(
     return image
 
 
-def replace_faces(image, boxes, replacement):
+def replace_faces(
+    image: np.ndarray,
+    boxes: List[Tuple[int, int, int, int]],
+    replacement: Optional[np.ndarray],
+) -> np.ndarray:
     """
     Replaces the detected faces in the image with a given replacement image.
 
