@@ -217,7 +217,9 @@ def highlight_edges(
     return edge_image
 
 
-def pixelate_faces(image, boxes, pixel_size=10):
+def pixelate_faces(
+    image: np.ndarray, boxes: List[Tuple[int, int, int, int]], pixel_size: int = 10
+) -> np.ndarray:
     """
     Pixelates the detected faces in the image.
 
