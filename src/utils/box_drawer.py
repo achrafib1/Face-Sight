@@ -166,7 +166,11 @@ def replace_faces(
     return image
 
 
-def highlight_edges(image, boxes, face_color="#56ecd5"):
+def highlight_edges(
+    image: np.ndarray,
+    boxes: List[Tuple[int, int, int, int]],
+    face_color: str = "#56ecd5",
+) -> np.ndarray:
     """
     Highlights the edges of the detected faces in the image.
 
@@ -182,7 +186,7 @@ def highlight_edges(image, boxes, face_color="#56ecd5"):
     # Remove the '#' from the start of the color string
     hex_color = face_color.lstrip("#")
     # Convert the hexadecimal color to a tuple of BGR values
-    face_color = tuple(
+    face_color_bgr = tuple(
         int(hex_color[i : i + 2], 16) for i in (4, 2, 0)
     )  # Reverse the tuple to get BGR
     # Convert the image to grayscale
@@ -205,7 +209,9 @@ def highlight_edges(image, boxes, face_color="#56ecd5"):
         # Extract the edges within the bounding box
         face_edges = edges[int(y1) : int(y2), int(x1) : int(x2)]
         # Set the pixels in the edge image where the face edges are detected to the desired color
-        edge_image[int(y1) : int(y2), int(x1) : int(x2)][face_edges != 0] = face_color
+        edge_image[int(y1) : int(y2), int(x1) : int(x2)][
+            face_edges != 0
+        ] = face_color_bgr
 
     # Return the edge image with the highlighted edges
     return edge_image
