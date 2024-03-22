@@ -5,19 +5,20 @@ from .box_drawer import draw_boxes
 from .predict import predict
 import cv2
 import numpy as np
+from typing import List, Tuple, Callable, Any, Optional
 
 
 def process_frame(
-    frame,
-    model,
-    names,
-    faces,
-    non_max_suppression,
-    scale_coords,
-    plot_one_box,
-    strategies,
-    background,
-):
+    frame: np.ndarray,
+    model: Any,
+    names: List[str],
+    faces: List[np.ndarray],
+    non_max_suppression: Callable,
+    scale_coords: Callable,
+    plot_one_box: Callable,
+    strategies: List[str],
+    background: str,
+) -> Tuple[Optional[List[Tuple[int, int, int, int]]], Optional[np.ndarray]]:
     """
     Processes a frame for object detection and applies various strategies.
 

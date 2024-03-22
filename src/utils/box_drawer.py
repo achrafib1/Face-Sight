@@ -1,6 +1,7 @@
 import cv2
-from typing import List, Tuple, Optional, Union
+from typing import List, Tuple, Optional, Union, Callable
 import numpy as np
+import torch
 
 
 def blur_faces(image: np.ndarray, boxes: List[Tuple[int, int, int, int]]) -> np.ndarray:
@@ -257,19 +258,19 @@ def pixelate_faces(
 
 
 def draw_boxes(
-    pred,
-    image,
-    img,
-    names,
-    original_size,
-    faces,
-    scale_coords,
-    plot_one_box,
-    strategies,
-    background="#56ecd5",
-    color="#56ecd5",
-    image_replacement=None,
-):
+    pred: np.ndarray,
+    image: np.ndarray,
+    img: torch.Tensor,
+    names: List[str],
+    original_size: Tuple[int, int],
+    faces: List[np.ndarray],
+    scale_coords: Callable,
+    plot_one_box: Callable,
+    strategies: List[str],
+    background: str = "#56ecd5",
+    color: str = "#56ecd5",
+    image_replacement: Optional[np.ndarray] = None,
+) -> Tuple[List[np.ndarray], List[Tuple[int, int, int, int]], np.ndarray]:
     """
     Draws bounding boxes on the detected faces in the image and applies various strategies.
 

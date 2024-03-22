@@ -1,21 +1,27 @@
 from .model_loader import load_model
 from .image_processor import process_image
 from .box_drawer import draw_boxes
+from typing import List, Tuple, Callable, Any, Optional
+import numpy as np
 
 
 def predict(
-    image,
-    model,
-    names,
-    faces,
-    scale_coords,
-    non_max_suppression,
-    plot_one_box,
-    strategies,
-    background,
-    color="#56ecd5",
-    image_replacement=None,
-):
+    image: np.ndarray,
+    model: Any,
+    names: List[str],
+    faces: List[np.ndarray],
+    scale_coords: Callable,
+    non_max_suppression: Callable,
+    plot_one_box: Callable,
+    strategies: List[str],
+    background: str,
+    color: str = "#56ecd5",
+    image_replacement: Optional[np.ndarray] = None,
+) -> Tuple[
+    Optional[List[np.ndarray]],
+    Optional[List[Tuple[int, int, int, int]]],
+    Optional[np.ndarray],
+]:
     """
     Predicts the bounding boxes for the detected faces in the image and applies various strategies.
 
@@ -48,7 +54,7 @@ def predict(
         )
 
         # Draw boxes on the image
-        boxes, faces, image_with_boxes = draw_boxes(
+        faces, boxes, image_with_boxes = draw_boxes(
             pred,
             image,
             processed_image,
