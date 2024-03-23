@@ -1,8 +1,11 @@
 import cv2
 import torch
+from typing import Any, Tuple
 
 
-def process_image(image, model, non_max_suppression):
+def process_image(
+    image: Any, model: Any, non_max_suppression: Any
+) -> Tuple[Any, Any, torch.Tensor, Tuple[int, int]]:
     """
     Processes an image for object detection.
 
