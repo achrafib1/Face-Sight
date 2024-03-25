@@ -22,11 +22,11 @@ st.markdown(
 def show():
     # Page title
     st.markdown(
-        "<h1 style='text-align: center; color: black;'>Digit Delineator</h1>",
+        "<h1 style='text-align: center; color: black;'>Face Sight</h1>",
         unsafe_allow_html=True,
     )
 
-    # st.image("static/images/_1eecbcb2-389a-4f9c-bcc2-48bc8cb79fa5.jpg")
+    st.image("static/images/face_det_image (2).jpg")
     if st.button("Start", use_container_width=True):
         st.switch_page("pages/home.py")
 

@@ -27,6 +27,7 @@ def show():
         # Introduction
         with st.container():
             st.header("Introduction", divider="orange")
+            page_bg_img = "static/images/face_det_image (1).jpg"
             st.write(
                 """
         # Welcome to FaceSight!
@@ -35,6 +36,7 @@ def show():
         Whether you're scanning through your photo library or streaming video in real-time, FaceSight is designed to spot every face, every time.
         """
             )
+        st.image(page_bg_img)
         # Navigation
         with st.container():
             st.header("start spy")
