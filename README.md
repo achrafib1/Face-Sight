@@ -71,8 +71,8 @@ Then, open your web browser and go to http://localhost:8501 to view the app.
 
 ## Acknowledgements
 
-This project uses the YOLOv7 repo for face detection. You can find the original YOLOv7 repository here.
+This project uses the YOLOv7 repo for face detection. You can find the original YOLOv7 repository [here](https://github.com/WongKinYiu/yolov7).
 
 ## License
 
-This project is licensed under the [insert your license here]. See the `LICENSE` file for details.
+This project is licensed under the GNU GENERAL PUBLIC LICENSE. See the `LICENSE` file for details.
